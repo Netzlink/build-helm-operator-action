@@ -1,7 +1,7 @@
-<img src="assets/netzlink_logo.jpg" alt="netzlink logo" height="200px" />
+<img src="./assets/netzlink_logo.png" alt="netzlink logo" height="50px" />
 
 # build-helm-operator-action
-![test_moodle](https://github.com/Netzlink/build-helm-operator-action/workflows/test_moodle/badge.svg?branch=master)  
+![test](https://github.com/Netzlink/build-helm-operator-action/workflows/test/badge.svg?branch=master)   
 An github action for building operators based on hel-chartsm via the redhat operator sdk
 
 # Build
