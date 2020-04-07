@@ -11,9 +11,7 @@ echo "Adding helm repo ${REPONAME} on ${REPOADDRESS}"
 helm repo add $REPONAME $REPOADDRESS
 echo "Pulling helm chart ${CHART}"
 helm pull $CHART
-IFS='/' # / is set as delimiter
-read -ra HELMCHARTARCHIVEPREFIX <<< "$CHART"
-export HELMCHARTARCHIVENAME=`ls ${HELMCHARTARCHIVEPREFIX}*`
+export HELMCHARTARCHIVENAME=`ls $(cut -d'/' -f2 <<< $CHART)*`
 echo "Pulled helm chart ${CHART}"
 
 echo "Removing old operator at ${PROJECT}"
