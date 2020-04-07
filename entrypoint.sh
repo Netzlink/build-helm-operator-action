@@ -7,27 +7,27 @@ export KIND=$5
 export APIVERSION=$6
 export IMAGENAME=$7
 
-echo "Adding helm repo `$REPONAME` on `$REPOADDRESS`"
+echo "Adding helm repo ${REPONAME} on ${REPOADDRESS}"
 helm add $REPONAME $REPOADDRESS
-echo "Pulling helm chart `$CHART`"
+echo "Pulling helm chart ${CHART}"
 helm pull $CHART
-echo "Pulled helm chart `$CHART`"
+echo "Pulled helm chart ${CHART}"
 
-echo "Building operator  in new project `$PROJECT` with Kind `$KIND` on ApiVersion `$APIVERSION`"
+echo "Building operator  in new project ${PROJECT} with Kind ${KIND} on ApiVersion ${APIVERSION}"
 operator-sdk new $PROJECT --type=helm --kind=$KIND --api-version=$APIVERSION
 echo "Build operator"
 
-echo "Changing image-name `$IMAGENAME` in deployment-files"
+echo "Changing image-name ${IMAGENAME} in deployment-files"
 cd ./$PROJECT
-sed -i "s|REPLACE_IMAGE|`$IMAGENAME`|g" deploy/operator.yaml
-sed -i "s|REPLACE_IMAGE|`$IMAGENAME`|g" deploy/operator.yaml
+sed -i "s|REPLACE_IMAGE|${IMAGENAME}|g" deploy/operator.yaml
+sed -i "s|REPLACE_IMAGE|${IMAGENAME}|g" deploy/operator.yaml
 echo "changed to image-name"
 
 echo "Adding to repository"
 git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
 git pull github $GITHUB_REF --ff-only
 git add .
-git commit -m "Build operator `$PROJECT` for `$APIVERSION`/`$KIND` with the operator-sdk with `$CHART`"
+git commit -m "Build operator ${PROJECT} for ${APIVERSION}/${KIND} with the operator-sdk with ${CHART}"
 git push github HEAD:$GITHUB_REF
 
 echo "ready..."
