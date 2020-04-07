@@ -24,6 +24,8 @@ sed -i "s|REPLACE_IMAGE|${IMAGENAME}|g" deploy/operator.yaml
 echo "changed to image-name"
 
 echo "Adding to repository"
+git config --global user.email "support@netzlink.com"
+git config --global user.name "build-helm-operator-action"
 git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
 git pull github $GITHUB_REF --ff-only
 git add .
