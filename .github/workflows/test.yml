@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build moodle test operator
+    - name: Build test operator
       uses: ./
       id: builder
     - name: Get the output time
