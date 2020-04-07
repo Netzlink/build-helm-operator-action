@@ -1,4 +1,4 @@
-name: test_moodle
+name: test
 on:
   push:
     branches: [ master ]
