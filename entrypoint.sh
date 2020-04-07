@@ -8,7 +8,7 @@ export APIVERSION=$6
 export IMAGENAME=$7
 
 echo "Adding helm repo ${REPONAME} on ${REPOADDRESS}"
-helm add $REPONAME $REPOADDRESS
+helm repo add $REPONAME $REPOADDRESS
 echo "Pulling helm chart ${CHART}"
 helm pull $CHART
 echo "Pulled helm chart ${CHART}"
