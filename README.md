@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build test operator
-      uses: ./
+      uses: 'Netzlink/build-helm-operator-action@master'
       id: builder
     - name: Get the output time
       run: echo "The time was ${{ steps.builder.outputs.time }}"
@@ -55,10 +55,8 @@ jobs:
       run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_SHA})
 
     - name: Build test operator version: ${{ env.RELEASE_VERSION }}
-      uses: ./
+      uses: 'Netzlink/build-helm-operator-action@master'
       id: builder
-    - name: Get the output time
-      run: echo "The time was ${{ steps.builder.outputs.time }}"
       with:
         repository-name: 'bitnami'
         repository-address: 'https://charts.bitnami.com/bitnami'
@@ -67,6 +65,9 @@ jobs:
         kind: 'Apache'
         api-version: 'apache.netzlink.com/v1alpha1'
         container-image: "netzlink/apache-operator:${{ env.RELEASE_VERSION }}"
+        
+    - name: Get the output time
+      run: echo "The time was ${{ steps.builder.outputs.time }}"
 
     - name: Publish netzlink/apache-operator:${{ env.RELEASE_VERSION }}
       uses: elgohr/Publish-Docker-Github-Action@master
