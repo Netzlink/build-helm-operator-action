@@ -1,0 +1,45 @@
+name: 'Build Helm Operator'
+description: 'Builds an helm-based operator for OpenShift/Kubernetes based on redhats operator-sdk'
+inputs:
+  repository-name:
+    description: 'The helm-repository-name with the helm-chart to be used'
+    required: true
+    default: 'stable'
+  repository-address:
+    description: 'The helm-repository-address for the helm-repository'
+    required: true
+    default: 'https://kubernetes-charts.storage.googleapis.com'
+  chart:
+    description: 'The helm-chart-name for the helm-chart'
+    required: true
+    default: 'stable/moodle'
+  project:
+    description: 'The project-name of your operator'
+    required: true
+    default: 'moodle-operator'
+  kind:
+    description: 'The kind of your CustomRessourceDefinition'
+    required: true
+    default: 'Moodle'
+  api-version:
+    description: 'The api-version to be used'
+    required: true
+    default: 'moodle.netzlink.com/v1alpha1'
+  container-image:
+    description: 'The full container-image name: (<REGISTRY>/)<REPOSITORY>/<IMAGENAME>:<TAG>'
+    required: true
+    default: 'netzlink/moodle'
+outputs:
+  time:
+    description: 'The time we created the chart'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.repository-name }}
+    - ${{ inputs.repository-address }}
+    - ${{ inputs.chart }}
+    - ${{ inputs.project }}
+    - ${{ inputs.kind }}
+    - ${{ inputs.api-version }}
+    - ${{ inputs.container-image }}
