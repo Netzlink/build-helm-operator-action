@@ -14,6 +14,10 @@ helm pull $CHART
 export HELMCHARTARCHIVENAME=`ls ${CHART}*` 
 echo "Pulled helm chart ${CHART}"
 
+echo "Removing old operator at ${PROJECT}"
+rm -rf ${PROJECT}
+echo "Removed old operator"
+
 echo "Building operator  in new project ${PROJECT} with Kind ${KIND} on ApiVersion ${APIVERSION}"
 operator-sdk new $PROJECT --type=helm --kind=$KIND --api-version=$APIVERSION --helm-chart=./$HELMCHARTARCHIVENAME
 echo "Build operator"
