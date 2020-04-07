@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-moodle-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: test-moodle-operator
+  template:
+    metadata:
+      labels:
+        name: test-moodle-operator
+    spec:
+      serviceAccountName: test-moodle-operator
+      containers:
+        - name: test-moodle-operator
+          # Replace this with the built image name
+          image: netzlink/moodle
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "test-moodle-operator"
