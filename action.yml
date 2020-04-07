@@ -16,7 +16,7 @@ inputs:
   project:
     description: 'The project-name of your operator'
     required: true
-    default: 'moodle-operator'
+    default: 'test-moodle-operator'
   kind:
     description: 'The kind of your CustomRessourceDefinition'
     required: true
