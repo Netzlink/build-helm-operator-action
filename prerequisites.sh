@@ -2,6 +2,9 @@
 echo "adding git, curl"
 apt-get update -y
 apt-get install -y git curl
+echo "Setting git mail and name"
+git config --global user.email "support@netzlink.com"
+git config --global user.name "build-helm-operator-action"
 echo "Adding helm3"
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 echo "Adding operator sdk"
