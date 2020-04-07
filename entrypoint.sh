@@ -15,7 +15,7 @@ export HELMCHARTARCHIVENAME=`ls ${CHART}*`
 echo "Pulled helm chart ${CHART}"
 
 echo "Building operator  in new project ${PROJECT} with Kind ${KIND} on ApiVersion ${APIVERSION}"
-operator-sdk new $PROJECT --type=helm --kind=$KIND --api-version=$APIVERSION --helm-chart=$HELMCHARTARCHIVENAME
+operator-sdk new $PROJECT --type=helm --kind=$KIND --api-version=$APIVERSION --helm-chart=./$HELMCHARTARCHIVENAME
 echo "Build operator"
 
 echo "Changing image-name ${IMAGENAME} in deployment-files"
