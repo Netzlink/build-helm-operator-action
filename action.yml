@@ -4,31 +4,31 @@ inputs:
   repository-name:
     description: 'The helm-repository-name with the helm-chart to be used'
     required: true
-    default: 'stable'
+    default: 'bitnami'
   repository-address:
     description: 'The helm-repository-address for the helm-repository'
     required: true
-    default: 'https://kubernetes-charts.storage.googleapis.com'
+    default: 'https://charts.bitnami.com/bitnami'
   chart:
     description: 'The helm-chart-name for the helm-chart'
     required: true
-    default: 'stable/moodle'
+    default: 'bitnami/apache'
   project:
     description: 'The project-name of your operator'
     required: true
-    default: 'test-moodle-operator'
+    default: 'test-apache-operator'
   kind:
     description: 'The kind of your CustomRessourceDefinition'
     required: true
-    default: 'Moodle'
+    default: 'Apache'
   api-version:
     description: 'The api-version to be used'
     required: true
-    default: 'moodle.netzlink.com/v1alpha1'
+    default: 'apache.netzlink.com/v1alpha1'
   container-image:
     description: 'The full container-image name: (<REGISTRY>/)<REPOSITORY>/<IMAGENAME>:<TAG>'
     required: true
-    default: 'netzlink/moodle'
+    default: 'netzlink/apache-operator'
 outputs:
   time:
     description: 'The time we created the chart'
