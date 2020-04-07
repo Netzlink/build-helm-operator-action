@@ -1,5 +1,0 @@
----
-- version: v1alpha1
-  group: moodle.netzlink.com
-  kind: Moodle
-  chart: helm-charts/moodle
