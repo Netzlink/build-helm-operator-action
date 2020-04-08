@@ -22,8 +22,6 @@ jobs:
     - name: Build test operator
       uses: 'Netzlink/build-helm-operator-action@master'
       id: builder
-    - name: Get the output time
-      run: echo "The time was ${{ steps.builder.outputs.time }}"
       with:
         repository-name: 'bitnami'
         repository-address: 'https://charts.bitnami.com/bitnami'
@@ -32,6 +30,9 @@ jobs:
         kind: 'Apache'
         api-version: 'apache.netzlink.com/v1alpha1'
         container-image: 'netzlink/apache-operator'
+
+    - name: Get the output time
+      run: echo "The time was ${{ steps.builder.outputs.time }}"
 ```
 This workflow is resposible for building your operator.  
 To build the operator and push the container-image we use a different workflow
