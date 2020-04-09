@@ -2,7 +2,7 @@
 
 # build-helm-operator-action
 ![test](https://github.com/Netzlink/build-helm-operator-action/workflows/test/badge.svg?branch=master)   
-An github action for building operators based on hel-chartsm via the redhat operator sdk
+An github action for building operators based on helm-charts via the redhat operator sdk
 
 # Build
 Add a workflow to your repository
