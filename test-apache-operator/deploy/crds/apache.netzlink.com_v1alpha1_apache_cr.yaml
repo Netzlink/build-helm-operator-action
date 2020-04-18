@@ -6,29 +6,75 @@ spec:
   # Default values copied from <project_dir>/helm-charts/apache/values.yaml
   
   affinity: {}
-  fullnameOverride: ""
-  image:
+  cloneHtdocsFromGit:
+    enabled: false
+    interval: 60
+  git:
     pullPolicy: IfNotPresent
-    repository: nginx
-  imagePullSecrets: []
+    registry: docker.io
+    repository: bitnami/git
+    tag: 2.26.1-debian-10-r1
+  image:
+    debug: false
+    pullPolicy: IfNotPresent
+    registry: docker.io
+    repository: bitnami/apache
+    tag: 2.4.43-debian-10-r18
   ingress:
     annotations: {}
+    certManager: false
     enabled: false
-    hosts:
-    - host: chart-example.local
-      paths: []
-    tls: []
-  nameOverride: ""
+    hostname: example.local
+    secrets: null
+    tls:
+    - hosts:
+      - example.local
+      secretName: example.local-tls
+  livenessProbe:
+    enabled: true
+    failureThreshold: 6
+    initialDelaySeconds: 180
+    path: /
+    periodSeconds: 20
+    port: http
+    successThreshold: 1
+    timeoutSeconds: 5
+  metrics:
+    enabled: false
+    image:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: bitnami/apache-exporter
+      tag: 0.8.0-debian-10-r10
+    podAnnotations:
+      prometheus.io/port: "9117"
+      prometheus.io/scrape: "true"
+    resources:
+      limits: {}
+      requests: {}
   nodeSelector: {}
-  podSecurityContext: {}
+  podAnnotations: {}
+  readinessProbe:
+    enabled: true
+    failureThreshold: 6
+    initialDelaySeconds: 30
+    path: /
+    periodSeconds: 10
+    port: http
+    successThreshold: 1
+    timeoutSeconds: 5
   replicaCount: 1
-  resources: {}
-  securityContext: {}
+  resources:
+    limits: {}
+    requests: {}
   service:
+    annotations: {}
+    externalTrafficPolicy: Cluster
+    httpsPort: 443
+    nodePorts:
+      http: ""
+      https: ""
     port: 80
-    type: ClusterIP
-  serviceAccount:
-    create: true
-    name: null
-  tolerations: []
+    type: LoadBalancer
+  tolerations: {}
   
