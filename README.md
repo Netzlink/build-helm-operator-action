@@ -2,7 +2,7 @@
 
 # build-helm-operator-action
 ![test](https://github.com/Netzlink/build-helm-operator-action/workflows/test/badge.svg?branch=master)   
-An github action for building operators based on hel-chartsm via the redhat operator sdk
+An github action for building operators based on helm-charts via the redhat operator sdk
 
 # Build
 Add a workflow to your repository
@@ -20,10 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build test operator
-      uses: ./
+      uses: 'Netzlink/build-helm-operator-action@master'
       id: builder
-    - name: Get the output time
-      run: echo "The time was ${{ steps.builder.outputs.time }}"
       with:
         repository-name: 'bitnami'
         repository-address: 'https://charts.bitnami.com/bitnami'
@@ -32,6 +30,9 @@ jobs:
         kind: 'Apache'
         api-version: 'apache.netzlink.com/v1alpha1'
         container-image: 'netzlink/apache-operator'
+
+    - name: Get the output time
+      run: echo "The time was ${{ steps.builder.outputs.time }}"
 ```
 This workflow is resposible for building your operator.  
 To build the operator and push the container-image we use a different workflow
@@ -55,10 +56,8 @@ jobs:
       run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_SHA})
 
     - name: Build test operator version: ${{ env.RELEASE_VERSION }}
-      uses: ./
+      uses: 'Netzlink/build-helm-operator-action@master'
       id: builder
-    - name: Get the output time
-      run: echo "The time was ${{ steps.builder.outputs.time }}"
       with:
         repository-name: 'bitnami'
         repository-address: 'https://charts.bitnami.com/bitnami'
@@ -67,6 +66,9 @@ jobs:
         kind: 'Apache'
         api-version: 'apache.netzlink.com/v1alpha1'
         container-image: "netzlink/apache-operator:${{ env.RELEASE_VERSION }}"
+        
+    - name: Get the output time
+      run: echo "The time was ${{ steps.builder.outputs.time }}"
 
     - name: Publish netzlink/apache-operator:${{ env.RELEASE_VERSION }}
       uses: elgohr/Publish-Docker-Github-Action@master
