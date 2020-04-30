@@ -1,0 +1,34 @@
+apiVersion: apache.netzlink.com/v1alpha1
+kind: Apache
+metadata:
+  name: example-apache
+spec:
+  # Default values copied from <project_dir>/helm-charts/apache/values.yaml
+  
+  affinity: {}
+  fullnameOverride: ""
+  image:
+    pullPolicy: IfNotPresent
+    repository: nginx
+  imagePullSecrets: []
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - host: chart-example.local
+      paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  podSecurityContext: {}
+  replicaCount: 1
+  resources: {}
+  securityContext: {}
+  service:
+    port: 80
+    type: ClusterIP
+  serviceAccount:
+    create: true
+    name: null
+  tolerations: []
+  
