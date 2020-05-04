@@ -102,7 +102,7 @@ oc get pods -w
 ```
 When running deploy your first instance with the test CustomRessource
 ```yaml
-oc create -f ./<PROJECT-NAME>/deploy/crds/<APIVERSION_DOMAIN_PART>_<APIVERSION_VERSION_PART>_<KIND>_cr.yaml
+oc create -f ./<PROJECT-NAME>/<APIVERSION_DOMAIN_PART>_<APIVERSION_VERSION_PART>_<KIND>_cr.yaml
 ```
 Wait for to be status running
 ```yaml
