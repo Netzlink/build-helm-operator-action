@@ -38,7 +38,7 @@ git config --global user.email "support@netzlink.com"
 git config --global user.name "build-helm-operator-action"
 git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
 git pull github $GITHUB_REF --ff-only
-git add .
+git add ..
 git commit -m "Build operator ${PROJECT} for ${APIVERSION}/${KIND} with the operator-sdk with ${CHART}"
 git push github HEAD:$GITHUB_REF
 
