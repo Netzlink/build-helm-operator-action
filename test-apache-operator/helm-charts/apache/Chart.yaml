@@ -16,4 +16,4 @@ maintainers:
 name: apache
 sources:
 - https://github.com/bitnami/bitnami-docker-apache
-version: 7.3.17
+version: 7.3.18
