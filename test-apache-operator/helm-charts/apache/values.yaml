@@ -6,13 +6,13 @@ git:
   pullPolicy: IfNotPresent
   registry: docker.io
   repository: bitnami/git
-  tag: 2.27.0-debian-10-r45
+  tag: 2.28.0-debian-10-r4
 image:
   debug: false
   pullPolicy: IfNotPresent
   registry: docker.io
   repository: bitnami/apache
-  tag: 2.4.43-debian-10-r112
+  tag: 2.4.43-debian-10-r118
 ingress:
   annotations: {}
   certManager: false
@@ -38,7 +38,7 @@ metrics:
     pullPolicy: IfNotPresent
     registry: docker.io
     repository: bitnami/apache-exporter
-    tag: 0.8.0-debian-10-r108
+    tag: 0.8.0-debian-10-r115
   podAnnotations:
     prometheus.io/port: "9117"
     prometheus.io/scrape: "true"
