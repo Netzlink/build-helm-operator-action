@@ -2,6 +2,7 @@ affinity: {}
 cloneHtdocsFromGit:
   enabled: false
   interval: 60
+  resources: {}
 git:
   pullPolicy: IfNotPresent
   registry: docker.io
