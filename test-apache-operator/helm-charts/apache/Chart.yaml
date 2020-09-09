@@ -3,7 +3,7 @@ annotations:
 apiVersion: v1
 appVersion: 2.4.46
 description: Chart for Apache HTTP Server
-home: https://httpd.apache.org
+home: https://github.com/bitnami/charts/tree/master/bitnami/apache
 icon: https://bitnami.com/assets/stacks/apache/img/apache-stack-220x234.png
 keywords:
 - apache
@@ -18,4 +18,5 @@ maintainers:
 name: apache
 sources:
 - https://github.com/bitnami/bitnami-docker-apache
-version: 7.3.24
+- https://httpd.apache.org
+version: 7.3.25
