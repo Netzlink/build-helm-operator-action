@@ -53,8 +53,14 @@ spec:
     resources:
       limits: {}
       requests: {}
+  nodeAffinityPreset:
+    key: ""
+    type: ""
+    values: []
   nodeSelector: {}
+  podAffinityPreset: ""
   podAnnotations: {}
+  podAntiAffinityPreset: soft
   readinessProbe:
     enabled: true
     failureThreshold: 6
@@ -77,5 +83,5 @@ spec:
       https: ""
     port: 80
     type: LoadBalancer
-  tolerations: {}
+  tolerations: []
   
