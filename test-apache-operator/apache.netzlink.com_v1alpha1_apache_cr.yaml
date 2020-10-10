@@ -10,6 +10,8 @@ spec:
     enabled: false
     interval: 60
     resources: {}
+  extraVolumeMounts: []
+  extraVolumes: []
   git:
     pullPolicy: IfNotPresent
     registry: docker.io
