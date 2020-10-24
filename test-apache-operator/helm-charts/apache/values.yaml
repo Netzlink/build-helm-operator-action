@@ -3,6 +3,7 @@ cloneHtdocsFromGit:
   enabled: false
   interval: 60
   resources: {}
+extraEnvVars: []
 extraVolumeMounts: []
 extraVolumes: []
 git:
