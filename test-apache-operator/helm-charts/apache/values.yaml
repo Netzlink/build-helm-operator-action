@@ -11,6 +11,10 @@ git:
   registry: docker.io
   repository: bitnami/git
   tag: 2.30.0-debian-10-r6
+hostAliases:
+- hostnames:
+  - status.localhost
+  ip: 127.0.0.1
 image:
   debug: false
   pullPolicy: IfNotPresent
