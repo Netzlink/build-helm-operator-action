@@ -10,6 +10,7 @@ spec:
     enabled: false
     interval: 60
     resources: {}
+  extraDeploy: []
   extraEnvVars: []
   extraVolumeMounts: []
   extraVolumes: []
@@ -41,6 +42,7 @@ spec:
     - hosts:
       - example.local
       secretName: example.local-tls
+  initContainers: {}
   kubeVersion: null
   livenessProbe:
     enabled: true
@@ -94,5 +96,6 @@ spec:
       https: ""
     port: 80
     type: LoadBalancer
+  sidecars: {}
   tolerations: []
   
