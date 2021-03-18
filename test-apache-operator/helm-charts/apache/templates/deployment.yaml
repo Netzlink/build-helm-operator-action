@@ -1,181 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "common.names.fullname" . }}
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
+  name: {{ include "apache.fullname" . }}
+  labels:
+    {{- include "apache.labels" . | nindent 4 }}
 spec:
-  selector:
-    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "apache.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      labels: {{- include "common.labels.standard" . | nindent 8 }}
-      {{- if or .Values.podAnnotations (and .Values.metrics.enabled .Values.metrics.podAnnotations) }}
-      annotations:
-        {{- if .Values.podAnnotations }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
-        {{- end }}
-        {{- if and .Values.metrics.enabled .Values.metrics.podAnnotations }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.metrics.podAnnotations "context" $) | nindent 8 }}
-        {{- end }}
-      {{- end }}
+      labels:
+        {{- include "apache.selectorLabels" . | nindent 8 }}
     spec:
-      {{- include "apache.imagePullSecrets" . | nindent 6 }}
-      {{- if .Values.hostAliases }}
-      # yamllint disable rule:indentation
-      hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.hostAliases "context" $) | nindent 8 }}
-      # yamllint enable rule:indentation
-      {{- end }}
-      {{- if .Values.affinity }}
-      affinity: {{- include "common.tplvalues.render" (dict "value" .Values.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAffinityPreset "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAntiAffinityPreset "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.nodeAffinityPreset.type "key" .Values.nodeAffinityPreset.key "values" .Values.nodeAffinityPreset.values) | nindent 10 }}
-      {{- end }}
-      {{- if .Values.nodeSelector }}
-      nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if .Values.tolerations }}
-      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if or .Values.initContainers .Values.cloneHtdocsFromGit.enabled }}
-      initContainers:
-        {{- if .Values.cloneHtdocsFromGit.enabled }}
-        - name: git-clone-repository
-          image: {{ include "git.image" . }}
-          imagePullPolicy: {{ .Values.git.pullPolicy | quote }}
-          command:
-            - /bin/bash
-            - -ec
-            - |
-              git clone {{ .Values.cloneHtdocsFromGit.repository }} --branch {{ .Values.cloneHtdocsFromGit.branch }} /app
-          resources: {{- toYaml .Values.cloneHtdocsFromGit.resources | nindent 12 }}
-          volumeMounts:
-            - name: htdocs
-              mountPath: /app
-        {{- end }}
-        {{- if .Values.initContainers }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
-        {{- end }}
-      {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "apache.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- if .Values.cloneHtdocsFromGit.enabled }}
-        - name: git-repo-syncer
-          image: {{ include "git.image" . }}
-          imagePullPolicy: {{ .Values.git.pullPolicy | quote }}
-          command:
-            - /bin/bash
-            - -ec
-            - |
-              while true; do
-                  cd /app && git pull origin {{ .Values.cloneHtdocsFromGit.branch }}
-                  sleep {{ .Values.cloneHtdocsFromGit.interval }}
-              done
-          resources: {{- toYaml .Values.cloneHtdocsFromGit.resources | nindent 12 }}
-          volumeMounts:
-            - name: htdocs
-              mountPath: /app
-        {{- end }}
-        - name: apache
-          image: {{ include "apache.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          env:
-            - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" .Values.image.debug | quote }}
-            {{- if .Values.extraEnvVars }}
-              {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 8080
-            - name: https
-              containerPort: 8443
-          {{- if .Values.livenessProbe.enabled }}
+              containerPort: 80
+              protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ .Values.livenessProbe.path }}
+              path: /
               port: http
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-            successThreshold: {{ .Values.livenessProbe.successThreshold }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          {{- end }}
-          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.readinessProbe.path }}
+              path: /
               port: http
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
-            successThreshold: {{ .Values.readinessProbe.successThreshold }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          {{- end }}
-          {{- if .Values.resources }}
-          resources: {{- toYaml .Values.resources | nindent 12 }}
-          {{- end }}
-          volumeMounts:
-            {{- if (include "apache.useHtdocs" .) }}
-            - name: htdocs
-              mountPath: /app
-            {{- end }}
-            {{- if or (.Files.Glob "files/vhosts/*.conf") (.Values.vhostsConfigMap) }}
-            - name: vhosts
-              mountPath: /vhosts
-            {{- end }}
-            {{- if or (.Files.Glob "files/httpd.conf") (.Values.httpdConfConfigMap) }}
-            - name: httpd-conf
-              mountPath: /opt/bitnami/apache/conf/httpd.conf
-              subPath: httpd.conf
-            {{- end }}
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "common.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
-            {{- end }}
-        {{- if .Values.metrics.enabled }}
-        - name: metrics
-          image: {{ template "apache.metrics.image" . }}
-          imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
-          command: ['/bin/apache_exporter', '--scrape_uri', 'http://status.localhost:8080/server-status/?auto']
-          ports:
-            - name: metrics
-              containerPort: 9117
-          livenessProbe:
-            httpGet:
-              path: /metrics
-              port: metrics
-            initialDelaySeconds: 15
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /metrics
-              port: metrics
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
-          {{- if .Values.metrics.resources }}
-          resources: {{- toYaml .Values.metrics.resources | nindent 12 }}
-          {{- end }}
-        {{- end }}
-        {{- if .Values.sidecars }}
-        {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
-        {{- end }}
-      volumes:
-        {{- if (include "apache.useHtdocs" .) }}
-        - name: htdocs
-          {{- include "apache.htdocsVolume" . | nindent 10 }}
-        {{- end }}
-        {{- if or (.Files.Glob "files/vhosts/*.conf") (.Values.vhostsConfigMap) }}
-        - name: vhosts
-          configMap:
-            name: {{ include "apache.vhostsConfigMap" . }}
-        {{- end }}
-        {{- if or (.Files.Glob "files/httpd.conf") (.Values.httpdConfConfigMap) }}
-        - name: httpd-conf
-          configMap:
-            name: {{ include "apache.httpdConfConfigMap" . }}
-        {{- end }}
-        {{- if .Values.extraVolumes }}
-        {{- include "common.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
-        {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

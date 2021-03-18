@@ -6,96 +6,29 @@ spec:
   # Default values copied from <project_dir>/helm-charts/apache/values.yaml
   
   affinity: {}
-  cloneHtdocsFromGit:
-    enabled: false
-    interval: 60
-    resources: {}
-  extraDeploy: []
-  extraEnvVars: []
-  extraVolumeMounts: []
-  extraVolumes: []
-  git:
-    pullPolicy: IfNotPresent
-    registry: docker.io
-    repository: bitnami/git
-    tag: 2.30.1-debian-10-r17
-  hostAliases:
-  - hostnames:
-    - status.localhost
-    ip: 127.0.0.1
+  fullnameOverride: ""
   image:
-    debug: false
     pullPolicy: IfNotPresent
-    registry: docker.io
-    repository: bitnami/apache
-    tag: 2.4.46-debian-10-r182
+    repository: nginx
+  imagePullSecrets: []
   ingress:
     annotations: {}
-    apiVersion: null
-    certManager: false
     enabled: false
-    hostname: example.local
-    path: /
-    pathType: ImplementationSpecific
-    secrets: null
-    tls:
-    - hosts:
-      - example.local
-      secretName: example.local-tls
-  initContainers: {}
-  kubeVersion: null
-  livenessProbe:
-    enabled: true
-    failureThreshold: 6
-    initialDelaySeconds: 180
-    path: /
-    periodSeconds: 20
-    port: http
-    successThreshold: 1
-    timeoutSeconds: 5
-  metrics:
-    enabled: false
-    image:
-      pullPolicy: IfNotPresent
-      registry: docker.io
-      repository: bitnami/apache-exporter
-      tag: 0.8.0-debian-10-r308
-    podAnnotations:
-      prometheus.io/port: "9117"
-      prometheus.io/scrape: "true"
-    resources:
-      limits: {}
-      requests: {}
-  nodeAffinityPreset:
-    key: ""
-    type: ""
-    values: []
+    hosts:
+    - host: chart-example.local
+      paths: []
+    tls: []
+  nameOverride: ""
   nodeSelector: {}
-  podAffinityPreset: ""
-  podAnnotations: {}
-  podAntiAffinityPreset: soft
-  readinessProbe:
-    enabled: true
-    failureThreshold: 6
-    initialDelaySeconds: 30
-    path: /
-    periodSeconds: 10
-    port: http
-    successThreshold: 1
-    timeoutSeconds: 5
+  podSecurityContext: {}
   replicaCount: 1
-  resources:
-    limits: {}
-    requests: {}
+  resources: {}
+  securityContext: {}
   service:
-    annotations: {}
-    externalTrafficPolicy: Cluster
-    httpsPort: 443
-    nodePorts:
-      http: ""
-      https: ""
     port: 80
-    type: LoadBalancer
-  sidecars: {}
+    type: ClusterIP
+  serviceAccount:
+    create: true
+    name: null
   tolerations: []
   
