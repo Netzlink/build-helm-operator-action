@@ -4,6 +4,8 @@ cloneHtdocsFromGit:
   extraVolumeMounts: []
   interval: 60
   resources: {}
+commonAnnotations: {}
+commonLabels: {}
 extraDeploy: []
 extraEnvVars: []
 extraVolumeMounts: []
@@ -68,6 +70,7 @@ nodeSelector: {}
 podAffinityPreset: ""
 podAnnotations: {}
 podAntiAffinityPreset: soft
+podLabels: {}
 readinessProbe:
   enabled: true
   failureThreshold: 6

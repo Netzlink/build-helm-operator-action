@@ -11,6 +11,8 @@ spec:
     extraVolumeMounts: []
     interval: 60
     resources: {}
+  commonAnnotations: {}
+  commonLabels: {}
   extraDeploy: []
   extraEnvVars: []
   extraVolumeMounts: []
@@ -75,6 +77,7 @@ spec:
   podAffinityPreset: ""
   podAnnotations: {}
   podAntiAffinityPreset: soft
+  podLabels: {}
   readinessProbe:
     enabled: true
     failureThreshold: 6
