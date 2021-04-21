@@ -14,7 +14,7 @@ git:
   pullPolicy: IfNotPresent
   registry: docker.io
   repository: bitnami/git
-  tag: 2.31.1-debian-10-r9
+  tag: 2.31.1-debian-10-r22
 hostAliases:
 - hostnames:
   - status.localhost
@@ -24,7 +24,7 @@ image:
   pullPolicy: IfNotPresent
   registry: docker.io
   repository: bitnami/apache
-  tag: 2.4.46-debian-10-r218
+  tag: 2.4.46-debian-10-r232
 ingress:
   annotations: {}
   apiVersion: null
@@ -55,7 +55,7 @@ metrics:
     pullPolicy: IfNotPresent
     registry: docker.io
     repository: bitnami/apache-exporter
-    tag: 0.8.0-debian-10-r344
+    tag: 0.8.0-debian-10-r357
   podAnnotations:
     prometheus.io/port: "9117"
     prometheus.io/scrape: "true"
