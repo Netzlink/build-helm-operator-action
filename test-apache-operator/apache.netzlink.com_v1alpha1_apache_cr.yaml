@@ -7,9 +7,11 @@ spec:
   
   affinity: {}
   cloneHtdocsFromGit:
+    branch: null
     enabled: false
     extraVolumeMounts: []
     interval: 60
+    repository: null
     resources: {}
   commonAnnotations: {}
   commonLabels: {}
@@ -17,18 +19,27 @@ spec:
   extraEnvVars: []
   extraVolumeMounts: []
   extraVolumes: []
+  fullnameOverride: null
   git:
     pullPolicy: IfNotPresent
+    pullSecrets: []
     registry: docker.io
     repository: bitnami/git
     tag: 2.32.0-debian-10-r26
+  global:
+    imagePullSecrets: []
+    imageRegistry: null
   hostAliases:
   - hostnames:
     - status.localhost
     ip: 127.0.0.1
+  htdocsConfigMap: null
+  htdocsPVC: null
+  httpdConfConfigMap: null
   image:
     debug: false
     pullPolicy: IfNotPresent
+    pullSecrets: []
     registry: docker.io
     repository: bitnami/apache
     tag: 2.4.48-debian-10-r28
@@ -38,9 +49,10 @@ spec:
     certManager: false
     enabled: false
     hostname: example.local
+    hosts: []
     path: /
     pathType: ImplementationSpecific
-    secrets: null
+    secrets: []
     tls:
     - hosts:
       - example.local
@@ -60,6 +72,7 @@ spec:
     enabled: false
     image:
       pullPolicy: IfNotPresent
+      pullSecrets: []
       registry: docker.io
       repository: bitnami/apache-exporter
       tag: 0.9.0-debian-10-r25
@@ -69,6 +82,7 @@ spec:
     resources:
       limits: {}
       requests: {}
+  nameOverride: null
   nodeAffinityPreset:
     key: ""
     type: ""
@@ -95,6 +109,7 @@ spec:
     annotations: {}
     externalTrafficPolicy: Cluster
     httpsPort: 443
+    loadBalancerIP: null
     nodePorts:
       http: ""
       https: ""
@@ -102,4 +117,5 @@ spec:
     type: LoadBalancer
   sidecars: {}
   tolerations: []
+  vhostsConfigMap: null
   
