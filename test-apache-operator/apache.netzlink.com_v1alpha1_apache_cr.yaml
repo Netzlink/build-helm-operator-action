@@ -7,11 +7,11 @@ spec:
   
   affinity: {}
   cloneHtdocsFromGit:
-    branch: null
+    branch: ""
     enabled: false
     extraVolumeMounts: []
     interval: 60
-    repository: null
+    repository: ""
     resources: {}
   commonAnnotations: {}
   commonLabels: {}
@@ -19,7 +19,7 @@ spec:
   extraEnvVars: []
   extraVolumeMounts: []
   extraVolumes: []
-  fullnameOverride: null
+  fullnameOverride: ""
   git:
     pullPolicy: IfNotPresent
     pullSecrets: []
@@ -28,14 +28,14 @@ spec:
     tag: 2.32.0-debian-10-r26
   global:
     imagePullSecrets: []
-    imageRegistry: null
+    imageRegistry: ""
   hostAliases:
   - hostnames:
     - status.localhost
     ip: 127.0.0.1
-  htdocsConfigMap: null
-  htdocsPVC: null
-  httpdConfConfigMap: null
+  htdocsConfigMap: ""
+  htdocsPVC: ""
+  httpdConfConfigMap: ""
   image:
     debug: false
     pullPolicy: IfNotPresent
@@ -45,7 +45,7 @@ spec:
     tag: 2.4.48-debian-10-r28
   ingress:
     annotations: {}
-    apiVersion: null
+    apiVersion: ""
     certManager: false
     enabled: false
     hostname: example.local
@@ -57,8 +57,8 @@ spec:
     - hosts:
       - example.local
       secretName: example.local-tls
-  initContainers: {}
-  kubeVersion: null
+  initContainers: []
+  kubeVersion: ""
   livenessProbe:
     enabled: true
     failureThreshold: 6
@@ -82,7 +82,7 @@ spec:
     resources:
       limits: {}
       requests: {}
-  nameOverride: null
+  nameOverride: ""
   nodeAffinityPreset:
     key: ""
     type: ""
@@ -109,13 +109,13 @@ spec:
     annotations: {}
     externalTrafficPolicy: Cluster
     httpsPort: 443
-    loadBalancerIP: null
+    loadBalancerIP: ""
     nodePorts:
       http: ""
       https: ""
     port: 80
     type: LoadBalancer
-  sidecars: {}
+  sidecars: []
   tolerations: []
-  vhostsConfigMap: null
+  vhostsConfigMap: ""
   
