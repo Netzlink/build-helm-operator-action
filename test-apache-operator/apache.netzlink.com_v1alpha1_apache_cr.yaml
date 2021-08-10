@@ -50,6 +50,7 @@ spec:
     enabled: false
     hostname: example.local
     hosts: []
+    ingressClassName: ""
     path: /
     pathType: ImplementationSpecific
     secrets: []
