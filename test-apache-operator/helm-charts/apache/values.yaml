@@ -111,4 +111,5 @@ service:
   type: LoadBalancer
 sidecars: []
 tolerations: []
+topologySpreadConstraints: []
 vhostsConfigMap: ""

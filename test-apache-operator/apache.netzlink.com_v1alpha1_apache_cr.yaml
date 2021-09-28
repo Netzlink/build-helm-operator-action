@@ -118,5 +118,6 @@ spec:
     type: LoadBalancer
   sidecars: []
   tolerations: []
+  topologySpreadConstraints: []
   vhostsConfigMap: ""
   
