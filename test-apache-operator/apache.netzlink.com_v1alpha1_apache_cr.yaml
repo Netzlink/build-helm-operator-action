@@ -17,6 +17,7 @@ spec:
   commonLabels: {}
   extraDeploy: []
   extraEnvVars: []
+  extraPodSpec: {}
   extraVolumeMounts: []
   extraVolumes: []
   fullnameOverride: ""
