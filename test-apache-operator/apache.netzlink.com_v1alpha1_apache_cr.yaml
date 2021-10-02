@@ -47,7 +47,6 @@ spec:
   ingress:
     annotations: {}
     apiVersion: ""
-    certManager: false
     enabled: false
     hostname: example.local
     hosts: []
