@@ -6,6 +6,12 @@ spec:
   # Default values copied from <project_dir>/helm-charts/apache/values.yaml
   
   affinity: {}
+  autoscaling:
+    enabled: false
+    maxReplicas: 11
+    minReplicas: 1
+    targetCPU: 50
+    targetMemory: 50
   cloneHtdocsFromGit:
     branch: ""
     enabled: false
@@ -54,6 +60,7 @@ spec:
     path: /
     pathType: ImplementationSpecific
     secrets: []
+    selfSigned: false
     tls:
     - hosts:
       - example.local
@@ -89,6 +96,10 @@ spec:
     type: ""
     values: []
   nodeSelector: {}
+  pdb:
+    create: false
+    maxUnavailable: ""
+    minAvailable: 1
   podAffinityPreset: ""
   podAnnotations: {}
   podAntiAffinityPreset: soft

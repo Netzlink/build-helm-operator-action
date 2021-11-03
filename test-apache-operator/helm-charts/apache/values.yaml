@@ -1,4 +1,10 @@
 affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 11
+  minReplicas: 1
+  targetCPU: 50
+  targetMemory: 50
 cloneHtdocsFromGit:
   branch: ""
   enabled: false
@@ -47,6 +53,7 @@ ingress:
   path: /
   pathType: ImplementationSpecific
   secrets: []
+  selfSigned: false
   tls:
   - hosts:
     - example.local
@@ -82,6 +89,10 @@ nodeAffinityPreset:
   type: ""
   values: []
 nodeSelector: {}
+pdb:
+  create: false
+  maxUnavailable: ""
+  minAvailable: 1
 podAffinityPreset: ""
 podAnnotations: {}
 podAntiAffinityPreset: soft
