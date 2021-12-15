@@ -14,6 +14,7 @@ spec:
     targetMemory: 50
   cloneHtdocsFromGit:
     branch: ""
+    enableAutoRefresh: true
     enabled: false
     extraVolumeMounts: []
     interval: 60
@@ -32,7 +33,7 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/git
-    tag: 2.34.0-debian-10-r3
+    tag: 2.34.1-debian-10-r17
   global:
     imagePullSecrets: []
     imageRegistry: ""
@@ -49,7 +50,7 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/apache
-    tag: 2.4.51-debian-10-r43
+    tag: 2.4.51-debian-10-r49
   ingress:
     annotations: {}
     apiVersion: ""
@@ -83,7 +84,7 @@ spec:
       pullSecrets: []
       registry: docker.io
       repository: bitnami/apache-exporter
-      tag: 0.10.1-debian-10-r59
+      tag: 0.10.1-debian-10-r81
     podAnnotations:
       prometheus.io/port: "9117"
       prometheus.io/scrape: "true"
