@@ -33,7 +33,7 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/git
-    tag: 2.34.1-debian-10-r17
+    tag: 2.34.1-debian-10-r23
   global:
     imagePullSecrets: []
     imageRegistry: ""
@@ -50,7 +50,7 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/apache
-    tag: 2.4.51-debian-10-r49
+    tag: 2.4.52-debian-10-r0
   ingress:
     annotations: {}
     apiVersion: ""
@@ -84,7 +84,7 @@ spec:
       pullSecrets: []
       registry: docker.io
       repository: bitnami/apache-exporter
-      tag: 0.10.1-debian-10-r81
+      tag: 0.11.0-debian-10-r2
     podAnnotations:
       prometheus.io/port: "9117"
       prometheus.io/scrape: "true"
