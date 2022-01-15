@@ -6,6 +6,7 @@ spec:
   # Default values copied from <project_dir>/helm-charts/apache/values.yaml
   
   affinity: {}
+  args: []
   autoscaling:
     enabled: false
     maxReplicas: 11
@@ -20,10 +21,23 @@ spec:
     interval: 60
     repository: ""
     resources: {}
+  command: []
   commonAnnotations: {}
   commonLabels: {}
+  containerPorts:
+    http: 8080
+    https: 8443
+  containerSecurityContext:
+    enabled: true
+    runAsNonRoot: true
+    runAsUser: 1001
+  customLivenessProbe: {}
+  customReadinessProbe: {}
+  customStartupProbe: {}
   extraDeploy: []
   extraEnvVars: []
+  extraEnvVarsCM: ""
+  extraEnvVarsSecret: ""
   extraPodSpec: {}
   extraVolumeMounts: []
   extraVolumes: []
@@ -33,10 +47,11 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/git
-    tag: 2.34.1-debian-10-r43
+    tag: 2.34.1-debian-10-r47
   global:
     imagePullSecrets: []
     imageRegistry: ""
+    storageClass: ""
   hostAliases:
   - hostnames:
     - status.localhost
@@ -50,11 +65,14 @@ spec:
     pullSecrets: []
     registry: docker.io
     repository: bitnami/apache
-    tag: 2.4.52-debian-10-r20
+    tag: 2.4.52-debian-10-r24
   ingress:
     annotations: {}
     apiVersion: ""
     enabled: false
+    extraHosts: []
+    extraPaths: []
+    extraTls: []
     hostname: example.local
     hosts: []
     ingressClassName: ""
@@ -68,6 +86,7 @@ spec:
       secretName: example.local-tls
   initContainers: []
   kubeVersion: ""
+  lifecycleHooks: {}
   livenessProbe:
     enabled: true
     failureThreshold: 6
@@ -80,11 +99,12 @@ spec:
   metrics:
     enabled: false
     image:
+      debug: false
       pullPolicy: IfNotPresent
       pullSecrets: []
       registry: docker.io
       repository: bitnami/apache-exporter
-      tag: 0.11.0-debian-10-r22
+      tag: 0.11.0-debian-10-r26
     podAnnotations:
       prometheus.io/port: "9117"
       prometheus.io/scrape: "true"
@@ -123,6 +143,10 @@ spec:
   podAnnotations: {}
   podAntiAffinityPreset: soft
   podLabels: {}
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+  priorityClassName: ""
   readinessProbe:
     enabled: true
     failureThreshold: 6
@@ -136,18 +160,36 @@ spec:
   resources:
     limits: {}
     requests: {}
+  schedulerName: ""
   service:
     annotations: {}
+    clusterIP: ""
     externalTrafficPolicy: Cluster
-    httpsPort: 443
+    extraPorts: []
     loadBalancerIP: ""
+    loadBalancerSourceRanges: []
     nodePorts:
       http: ""
       https: ""
-    port: 80
+    ports:
+      http: 80
+      https: 443
+    sessionAffinity: None
+    sessionAffinityConfig: {}
     type: LoadBalancer
   sidecars: []
+  startupProbe:
+    enabled: false
+    failureThreshold: 6
+    initialDelaySeconds: 180
+    path: /
+    periodSeconds: 20
+    port: http
+    successThreshold: 1
+    timeoutSeconds: 5
   tolerations: []
   topologySpreadConstraints: []
+  updateStrategy:
+    type: RollingUpdate
   vhostsConfigMap: ""
   
